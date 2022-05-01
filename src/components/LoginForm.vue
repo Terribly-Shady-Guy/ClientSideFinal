@@ -1,5 +1,5 @@
 <template>
-    <form id="loginForm">
+    <form id="loginForm" v-show="currentRoute != 'signup'">
         <div v-if="!auth">
             <p v-if="status == 'error'" id="errorMessage">{{ message }}</p>
             <div><input type="text" placeholder="Enter username" v-model="username"></div>
@@ -34,6 +34,9 @@ export default {
         },
         loggedInUsername: function() {
             return store.state.username;
+        },
+        currentRoute: function() {
+            return this.$route.name;
         }
     },
     methods: {

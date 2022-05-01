@@ -1,8 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import SignUpView from '../views/SignUpView.vue'
-import PhotoDisplayView from '../views/PhotoDisplayView.vue'
 
 Vue.use(VueRouter)
 
@@ -10,17 +7,17 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: () => import('../views/HomeView.vue')
   },
   {
     path: '/signup',
     name: 'signup',
-    component: SignUpView
+    component: () => import('../views/SignUpView.vue')
   },
   {
     path: '/photodisplay',
     name: 'photodisplay',
-    component: PhotoDisplayView
+    component: () => import('../views/PhotoDisplayView.vue')
   },
   {
     path: '/about',
