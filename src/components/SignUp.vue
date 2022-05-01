@@ -16,10 +16,10 @@
         </form>
         <ul>
             <li v-show="password.length < 6">Password must be at least 6 characters</li>
-            <li v-show="/^[A-Z]*$/.test(password)">Password must contain at least 1 upper case letter</li>
-            <li v-show="/^[a-z]*$/.test(password)">Password must contain at least 1 lower case letter</li>
-            <li v-show="/^[0-9]*$/.test(password)">Password must contain at least 1 number</li>
-            <li v-show="/^[!@#$%^&*]*$/.test(password)">Password must contain at least 1 special character</li>
+            <li v-show="/(?=.*[A-Z])*$/.test(password)">Password must contain at least 1 upper case letter</li>
+            <li v-show="/(?=.*[a-z])*$/.test(password)">Password must contain at least 1 lower case letter</li>
+            <li v-show="/(?=.\d)*$/.test(password)">Password must contain at least 1 number</li>
+            <li v-show="/(?=.*[!@#$%^&*])*$/.test(password)">Password must contain at least 1 special character</li>
         </ul>
     </div>
 </template>
@@ -50,7 +50,7 @@ export default {
                 formData.append("lastName", this.lastName);
                 formData.append("email", this.email);
 
-                const url = "http://localhost/tylerkaufmannfinal/src/php/signup.php";
+                const url = "http://localhost/Client-Side_Programming/tylerkaufmannfinal/src/php/signup.php";
 
                 const response = await fetch(url, {
                     method: 'POST',

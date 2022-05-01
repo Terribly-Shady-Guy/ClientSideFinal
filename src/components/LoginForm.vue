@@ -46,7 +46,7 @@ export default {
             formData.append("username", this.username);
             formData.append("password", this.password);
 
-            const url = "http://localhost/tylerkaufmannfinal/src/php/login.php";
+            const url = "http://localhost/Client-Side_Programming/tylerkaufmannfinal/src/php/login.php";
 
             const response = await fetch(url, {
                 method: 'POST',

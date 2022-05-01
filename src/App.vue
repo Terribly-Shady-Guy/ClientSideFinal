@@ -4,7 +4,7 @@
       <h1>Digital Photography Portfolio</h1>
       <nav>
         <router-link to="/">Home</router-link>
-        <router-link to="/photodisplay">Portfolio</router-link>
+        <router-link to="/photodisplay" v-if="auth">Portfolio</router-link>
         <router-link to="/about">About</router-link>
       </nav>
       <login-form/>
@@ -15,8 +15,14 @@
 
 <script>
 import LoginForm from "@/components/LoginForm.vue";
+import store from "@/store/index.js";
 
 export default {
+  computed: {
+    auth: function() {
+      return store.state.auth;
+    }
+  },
   name: "app",
   components: {
     LoginForm
