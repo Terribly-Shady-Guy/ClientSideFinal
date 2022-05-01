@@ -34,49 +34,45 @@ export default {
             lastName: "",
             email: "",
             status: "",
-            message: "",
-            isValidPassword: false
+            message: ""
         };
     },
     methods: {
-        signUp: function() {
-            if (this.isValidPassword) {
-                let vm = this;
+        signUp: async function() {
+            var pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{6,}$/;
+
+            if (pattern.test(this.password)) {
                 let formData = new FormData();
 
-                formData.append("username", vm.username);
-                formData.append("password", vm.password);
-                formData.append("firstName", vm.firstName);
-                formData.append("lastName", vm.lastName);
-                formData.append("email", vm.email);
+                formData.append("username", this.username);
+                formData.append("password", this.password);
+                formData.append("firstName", this.firstName);
+                formData.append("lastName", this.lastName);
+                formData.append("email", this.email);
 
-                fetch("http://localhost/tylerkaufmannfinal/src/php/signup.php", {
+                const url = "http://localhost/tylerkaufmannfinal/src/php/signup.php";
+
+                const response = await fetch(url, {
                     method: 'POST',
                     body: formData
-                })
-                .then(response => response.json())
-                .then(function(data) {
-                    vm.status = data.status;
-
-                    if (data.status == "success") {
-                        vm.username = "";
-                        vm.password = "";
-                        vm.firstName = "";
-                        vm.lastName = "";
-                        vm.email = "";
-
-                        vm.$router.push("/");
-                    } else {
-                        vm.message = data.message;
-                    }
                 });
+
+                const data = await response.json();
+
+                this.status = data.status;
+
+                if (data.status == "success") {
+                    this.username = "";
+                    this.password = "";
+                    this.firstName = "";
+                    this.lastName = "";
+                    this.email = "";
+
+                    this.$router.push("/");
+                } else {
+                    this.message = data.message;
+                }
             }
-        }
-    },
-    watch: {
-        password: function() {
-            let pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{6,}$/;
-            this.isValidPassword = pattern.test(this.password);
         }
     }
 }

@@ -1,6 +1,6 @@
 <template>
     <form id="loginForm">
-        <fieldset v-if="!store.state.auth">
+        <fieldset v-if="!auth">
             <p v-if="status == 'error'" id="errorMessage">{{ message }}</p>
             <div><input type="text" placeholder="Enter username" v-model="username"></div>
             <div><input type="password" placeholder="Enter password" v-model="password"></div>
@@ -10,7 +10,7 @@
             </div>
         </fieldset>
         <fieldset v-else>
-            <p>Welcome {{ store.state.username }}!</p>
+            <p>Welcome {{ loggedInUsername }}!</p>
             <button type="submit" v-on:click.prevent="logout()">Log out</button>
         </fieldset>
     </form>
@@ -31,39 +31,40 @@ export default {
     computed: {
         auth: function() {
             return store.state.auth;
+        },
+        loggedInUsername: function() {
+            return store.state.username;
         }
     },
     methods: {
-        login: function() {
-            let vm = this;
-            let formData = new FormData();
+        login: async function() {
+            var formData = new FormData();
 
-            formData.append("username", vm.username);
-            formData.append("password", vm.password);
+            formData.append("username", this.username);
+            formData.append("password", this.password);
 
-            fetch("http://localhost/tylerkaufmannfinal/src/php/login.php", {
+            const url = "http://localhost/tylerkaufmannfinal/src/php/login.php";
+
+            const response = await fetch(url, {
                 method: 'POST',
                 body: formData
-            })
-            .then(response => response.json())
-            .then(function(data) {
-                vm.status = data.status;
-
-                if (data.status == "success") {
-                    store.state.username = data.username;
-                    store.state.auth = data.auth;
-                    store.state.session = data.session;
-
-                    vm.username = "";
-                    vm.password = "";
-                } else {
-                    vm.message = data.message;
-                }
             });
+            
+            const data = await response.json();
+            
+            this.status = data.status;
+
+            if (data.status == "success") {
+                store.commit("setLogin", data);
+
+                this.username = "";
+                this.password = "";
+            } else {
+                this.message = data.message;
+            }
         },
         logout: function() {
-            store.state.auth = false;
-            store.state.username = "";
+            store.commit("setLogout");
         }
     }
 }
