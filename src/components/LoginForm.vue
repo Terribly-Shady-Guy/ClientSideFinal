@@ -1,6 +1,6 @@
 <template>
     <form id="loginForm">
-        <fieldset v-if="!auth">
+        <div v-if="!auth">
             <p v-if="status == 'error'" id="errorMessage">{{ message }}</p>
             <div><input type="text" placeholder="Enter username" v-model="username"></div>
             <div><input type="password" placeholder="Enter password" v-model="password"></div>
@@ -8,11 +8,11 @@
                 <button type="submit" v-on:click.prevent="login()">Log in</button>
                 <router-link to="/signup">Sign Up</router-link>
             </div>
-        </fieldset>
-        <fieldset v-else>
+        </div>
+        <div v-else>
             <p>Welcome {{ loggedInUsername }}!</p>
             <button type="submit" v-on:click.prevent="logout()">Log out</button>
-        </fieldset>
+        </div>
     </form>
 </template>
 
