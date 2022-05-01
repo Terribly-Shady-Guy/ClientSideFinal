@@ -37,7 +37,7 @@ export default {
         }
     },
     created: function() {
-        this.getImages;
+        this.getImages();
     },
     methods: {
         getImages: async function() {
@@ -82,7 +82,7 @@ export default {
             this.status = data.status;
 
             if (data.status == "success") {
-                this.getImages;
+                this.getImages();
             } else {
                 this.message = data.message;
             }
