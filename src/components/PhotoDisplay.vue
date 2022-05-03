@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button type="submit">Add Image</button>
+        <router-link to="/insertimage"/>
         <h2>Welcome to your photography portfolio {{ username }}!</h2>
         <h3 v-if="status == 'error'">{{ message }}</h3>
         <div class="photoCard" v-for="image in images" :key="image.PortID">
