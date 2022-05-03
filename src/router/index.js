@@ -25,6 +25,11 @@ const routes = [
     component: () => import('../views/InsertImageView.vue')
   },
   {
+    path: '/updateimage',
+    name: 'updateimage',
+    component: () => import('../views/UpdateImageView.vue')
+  },
+  {
     path: '/about',
     name: 'about',
     // route level code-splitting

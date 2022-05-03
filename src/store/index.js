@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     username: "",
     auth: false,
-    session: ""
+    session: "",
+    portID: ""
   },
   getters: {
   },
@@ -20,6 +21,9 @@ export default new Vuex.Store({
     setLogout: function(state) {
       state.username = "";
       state.auth = false;
+    },
+    setPortID: function(state, payload) {
+      state.portID = payload.portID;
     }
   },
   actions: {

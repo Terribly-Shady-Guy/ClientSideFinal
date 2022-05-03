@@ -9,7 +9,7 @@
             <p>{{ image.DateTaken }}</p>
             <p>{{ image.UploadDate }}</p>
             <form>
-                <button type="submit">Update</button>
+                <button type="submit" v-on:click.prevent="updateImage">Update</button>
                 <button type="submit" v-on:click.prevent="deleteImage">Delete</button>
                 <input type="hidden" class="portID" v-bind:value="image.PortID">
             </form>
@@ -86,6 +86,14 @@ export default {
             } else {
                 this.message = data.message;
             }
+        },
+        updateImage: function(event) {
+            var submittedForm = event.submitter.form;
+            var portID = submittedForm.elements.item(2);
+
+            store.commit("setPortID", { portID: portID });
+
+            this.$router.push("/updateimage");
         }
     }
 }
