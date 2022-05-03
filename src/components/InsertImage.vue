@@ -1,5 +1,6 @@
 <template>
     <form>
+        <p v-if="status == 'error'">{{ message }}</p>
         <label for="image">Image: </label>
         <input type="file" id="image" v-on:change="changeImage">
         <label for="description">Description: </label>
