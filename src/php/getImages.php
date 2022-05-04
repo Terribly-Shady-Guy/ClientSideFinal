@@ -30,9 +30,9 @@ if ($_SESSION['auth'])
                 $response['status'] = "success";
                 $images = array();
                 
-                for ($inex = 0; $index < $rows; $index++)
+                foreach ($result as $image)
                 {
-                    $images[] = $result->fetch_row();
+                    $images[] = $image;
                 }
 
                 $response['images'] = $images;
@@ -40,7 +40,7 @@ if ($_SESSION['auth'])
             else
             {
                 $response['status'] = "error";
-                $response['message'] = "No images found. Click on the 'Add Image' button to add your first image!";
+                $response['message'] = "No images found. Click on 'Add Image' to add your first image!";
             }
         }
         else

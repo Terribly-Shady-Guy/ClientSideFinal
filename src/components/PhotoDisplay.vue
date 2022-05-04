@@ -1,17 +1,17 @@
 <template>
     <div>
-        <router-link to="/insertimage"/>
         <h2>Welcome to your photography portfolio {{ username }}!</h2>
+        <router-link to="/insertimage">Add Image</router-link>
         <h3 v-if="status == 'error'">{{ message }}</h3>
         <div class="photoCard" v-for="image in images" :key="image.PortID">
-            <img v-bind:src="'@/assets/portfolio_images/' + image.Picture">
+            <img v-bind:src="require('@/assets/portfolio_images/' + image.Picture)">
             <p>{{ image.Description }}</p>
             <p>{{ image.DateTaken }}</p>
             <p>{{ image.UploadDate }}</p>
             <form>
                 <button type="submit" v-on:click.prevent="updateImage">Update</button>
                 <button type="submit" v-on:click.prevent="deleteImage">Delete</button>
-                <input type="hidden" class="portID" v-bind:value="image.PortID">
+                <input type="hidden" v-bind:value="image.PortID">
             </form>
         </div>
     </div>
@@ -41,14 +41,15 @@ export default {
     },
     methods: {
         getImages: async function() {
+            var formData = new FormData();
+
+            formData.append("session", this.session);
+
             const url = "http://localhost/Client-Side_Programming/tylerkaufmannfinal/src/php/getImages.php";
-            var currentSession = this.session;
 
             const response = await fetch(url, {
                 method: 'POST',
-                body: {
-                    session: currentSession
-                }
+                body: formData
             });
 
             const data = await response.json();
@@ -62,8 +63,8 @@ export default {
             }
         },
         deleteImage: async function(event) {
-            var submittedForm = event.submitter.form;
-            var portID = submittedForm.elements.item(2);
+            var targetForm = event.target.form;
+            var portID = targetForm.elements.item(2).value;
 
             var formData = new FormData();
 
@@ -88,8 +89,8 @@ export default {
             }
         },
         updateImage: function(event) {
-            var submittedForm = event.submitter.form;
-            var portID = submittedForm.elements.item(2);
+            var targetForm = event.target.form;
+            var portID = targetForm.elements.item(2).value;
 
             store.commit("setPortID", { portID: portID });
 
@@ -100,5 +101,13 @@ export default {
 </script>
 
 <style scoped>
+.photoCard {
+    width: 30%;
+    display: grid;
+}
 
+.photoCard img {
+    width: 70%;
+    height: 200px;
+}
 </style>

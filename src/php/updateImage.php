@@ -10,6 +10,7 @@ if ($_SESSION['auth']
 && isset($_POST['description'])
 && isset($_POST['dateTaken']))
 {
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
     $connection = new mysqli($hn, $un, $pw, $db);
 
     if ($connection->connect_error)
@@ -86,7 +87,8 @@ function update($picture, $connection)
     else
     {
         $response['status'] = "db error";
-        $response['message'] = "Could not update data";
+        $error = $stmt->error;
+        $response['message'] = "Could not update data. Reason: $error";
     }
 
     $stmt->close();

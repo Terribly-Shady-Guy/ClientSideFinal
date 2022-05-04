@@ -5,13 +5,13 @@
             <div><input type="text" placeholder="Enter username" v-model="username"></div>
             <div><input type="password" placeholder="Enter password" v-model="password"></div>
             <div>
-                <button type="submit" v-on:click.prevent="login()">Log in</button>
+                <button type="submit" id="login" v-on:click.prevent="login()">Log in</button>
                 <router-link to="/signup">Sign Up</router-link>
             </div>
         </div>
         <div v-else>
             <p>Welcome {{ loggedInUsername }}!</p>
-            <button type="submit" v-on:click.prevent="logout()">Log out</button>
+            <button type="submit" id="logout" v-on:click.prevent="logout()">Log out</button>
         </div>
     </form>
 </template>
@@ -68,6 +68,10 @@ export default {
         },
         logout: function() {
             store.commit("setLogout");
+
+            if (this.currentRoute != "home") {
+                this.$router.push("/");
+            }
         }
     }
 }
@@ -84,7 +88,7 @@ float: left;
     margin-bottom: 5px;
 }
 
-#loginForm input, #loginForm button, #loginForm a {
+#loginForm input, #login, #loginForm a {
     float: right;
 }
 

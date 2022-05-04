@@ -26,10 +26,14 @@ if ($_SESSION['auth'])
         {
             $result = $stmt->get_result();
 
+            $imageData = $result->fetch_array(MYSQLI_ASSOC);
+
             $response['status'] = "success";
-            $response['picture'] = $result['Picture'];
-            $response['description'] = $result['Description'];
-            $response['dateTaken'] = $result['DateTaken'];
+            $response['picture'] = $imageData['Picture'];
+            $response['description'] = $imageData['Description'];
+            $response['dateTaken'] = $imageData['DateTaken'];
+
+            $result->close();
         }
         else
         {

@@ -6,8 +6,7 @@ require_once "utils.php";
 session_id($_POST['session']);
 session_start();
 
-if ($_SESSION['auth'] 
-&& isset($_POST['picture']) 
+if ($_SESSION['auth']
 && isset($_POST['description']) 
 && isset($_POST['dateTaken']))
 {
@@ -40,13 +39,13 @@ if ($_SESSION['auth']
         {
             $portID = null;
             $userID = $_SESSION['userID'];
-            $picture = sanitizeInput($_FILES['picture']['name'], $connection);
+            $picture = $_FILES['picture']['name'];
             $description = sanitizeInput($_POST['description'], $connection);
             $dateTaken = sanitizeInput($_POST['dateTaken'], $connection);
             $uploadDate = date("Y-m-d", time());
 
             $stmt = $connection->prepare("INSERT INTO portfolio  VALUES(?,?,?,?,?,?)");
-            $stmt->bind_param("iissss", $portID, $userID, $picture, $description, $dateTaken, $uploadDate);
+            $stmt->bind_param("iissss", $portID, $userID, $picture, $dateTaken, $description, $uploadDate);
 
             if ($stmt->execute())
             {
@@ -58,7 +57,8 @@ if ($_SESSION['auth']
             else
             {
                 $response['status'] = "db error";
-                $response['message'] = "Could not insert data into database";
+                $error = $stmt->error;
+                $response['message'] = "Could not insert data into database. Reason: $error";
             }
 
             $stmt->close();
