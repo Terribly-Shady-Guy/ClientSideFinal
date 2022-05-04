@@ -3,23 +3,23 @@
         <form>
             <p v-if="status != 'success'">{{ message }}</p>
             <label for="username">Username: </label>
-            <input type="text" id="username" v-model="username" required>
+            <input type="text" id="username" v-model="username">
             <label for="password">Password: </label>
-            <input type="password" id="password" v-model="password" required>
+            <input type="password" id="password" v-model="password">
             <label for="firstName">First Name: </label>
-            <input type="text" id="firstName" v-model="firstName" required>
+            <input type="text" id="firstName" v-model="firstName">
             <label for="lastName">Last Name: </label>
-            <input type="text" id="lastName" v-model="lastName" required>
+            <input type="text" id="lastName" v-model="lastName">
             <label for="email">Email: </label>
-            <input type="text" id="email" v-model="email" required>
-            <button type="submit" v-on:click.prevent="signUp()">Sign Up</button>
+            <input type="text" id="email" v-model="email">
+            <button type="submit" v-on:click.prevent="signUp">Sign Up</button>
         </form>
         <ul>
-            <li v-show="password.length < 6">Password must be at least 6 characters</li>
-            <li v-show="/(?=.*[A-Z])*$/.test(password)">Password must contain at least 1 upper case letter</li>
-            <li v-show="/(?=.*[a-z])*$/.test(password)">Password must contain at least 1 lower case letter</li>
-            <li v-show="/(?=.\d)*$/.test(password)">Password must contain at least 1 number</li>
-            <li v-show="/(?=.*[!@#$%^&*])*$/.test(password)">Password must contain at least 1 special character</li>
+            <li v-show="!passwordValidaton.hasMinLength">Password must be at least 6 characters</li>
+            <li v-show="!passwordValidaton.hasUppercase">Password must contain at least 1 upper case letter</li>
+            <li v-show="!passwordValidaton.hasLowercase">Password must contain at least 1 lower case letter</li>
+            <li v-show="!passwordValidaton.hasDigit">Password must contain at least 1 number</li>
+            <li v-show="!passwordValidaton.hasSpecialChar">Password must contain at least 1 special character</li>
         </ul>
     </div>
 </template>
@@ -34,7 +34,14 @@ export default {
             lastName: "",
             email: "",
             status: "",
-            message: ""
+            message: "",
+            passwordValidaton: {
+                hasMinLength: false,
+                hasDigit: false,
+                hasUppercase: false,
+                hasLowercase: false,
+                hasSpecialChar: false
+            }
         };
     },
     methods: {
@@ -72,6 +79,23 @@ export default {
                 } else {
                     this.message = data.message;
                 }
+            }
+        }
+    },
+    watch: {
+        password: function() {
+            if (this.password != "") {
+                this.passwordValidaton.hasMinLength = this.password.length > 6;
+                this.passwordValidaton.hasLowercase = /(?=.*[a-z])/.test(this.password);
+                this.passwordValidaton.hasUppercase = /(?=.*[A-Z])/.test(this.password);
+                this.passwordValidaton.hasDigit = /(?=.\d)/.test(this.password);
+                this.passwordValidaton.hasSpecialChar = /(?=.*[!@#$%^&*])/.test(this.password);
+            } else {
+                this.passwordValidaton.hasMinLength = false;
+                this.passwordValidaton.hasLowercase = false;
+                this.passwordValidaton.hasUppercase = false;
+                this.passwordValidaton.hasDigit = false;
+                this.passwordValidaton.hasSpecialChar = false;
             }
         }
     }
