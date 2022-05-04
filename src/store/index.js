@@ -10,8 +10,6 @@ export default new Vuex.Store({
     session: "",
     portID: ""
   },
-  getters: {
-  },
   mutations: {
     setLogin: function(state, payload) {
       state.username = payload.username;
@@ -25,9 +23,5 @@ export default new Vuex.Store({
     setPortID: function(state, payload) {
       state.portID = payload.portID;
     }
-  },
-  actions: {
-  },
-  modules: {
   }
 })
