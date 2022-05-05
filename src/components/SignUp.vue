@@ -129,5 +129,6 @@ label {
 
 ul {
     text-align: center;
+    color: red;
 }
 </style>

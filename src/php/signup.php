@@ -18,28 +18,38 @@ if (isset($_POST['username'])
     }
     else
     {
-        $id = null;
-        $username = sanitizeInput($_POST['username'], $connection);
+        $pattern = "/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{6,}$/";
         $password = sanitizeInput($_POST['password'], $connection);
-        $password = password_hash($password, PASSWORD_DEFAULT);
-        $firstName = sanitizeInput($_POST['firstName'], $connection);
-        $lastName = sanitizeInput($_POST['lastName'], $connection);
-        $email = sanitizeInput($_POST['email'], $connection);
 
-        $stmt = $connection->prepare("INSERT INTO users VALUES(?,?,?,?,?,?)");
-        $stmt->bind_param("isssss", $id, $firstName, $lastName, $email, $username, $password);
-
-        if ($stmt->execute())
+        if (preg_match($pattern, $password))
         {
-            $response['status'] = "success";
+            $id = null;
+            $username = sanitizeInput($_POST['username'], $connection);
+            $password = password_hash($password, PASSWORD_DEFAULT);
+            $firstName = sanitizeInput($_POST['firstName'], $connection);
+            $lastName = sanitizeInput($_POST['lastName'], $connection);
+            $email = sanitizeInput($_POST['email'], $connection);
+
+            $stmt = $connection->prepare("INSERT INTO users VALUES(?,?,?,?,?,?)");
+            $stmt->bind_param("isssss", $id, $firstName, $lastName, $email, $username, $password);
+
+            if ($stmt->execute())
+            {
+                $response['status'] = "success";
+            }
+            else
+            {
+                $response['status'] = "db error";
+                $response['message'] = $stmt->error;
+            }
+
+            $stmt->close();
         }
         else
         {
-            $response['status'] = "db error";
-            $response['message'] = $stmt->error;
+            $response['status'] = "error";
+            $response['message'] = "Password is not in a valid format";
         }
-
-        $stmt->close();
     }
 
     $connection->close();
