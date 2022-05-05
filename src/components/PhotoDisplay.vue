@@ -9,8 +9,8 @@
             <div class="photoCard" v-for="image in images" :key="image.PortID">
                 <img v-bind:src="require('@/assets/portfolio_images/' + image.Picture)">
                 <p>{{ image.Description }}</p>
-                <p>{{ image.DateTaken }}</p>
-                <p>{{ image.UploadDate }}</p>
+                <p>Taken: {{ image.DateTaken }}</p>
+                <p>Uploaded: {{ image.UploadDate }}</p>
                 <form>
                     <button type="submit" v-on:click.prevent="updateImage">Update</button>
                     <button type="submit" v-on:click.prevent="deleteImage">Delete</button>
