@@ -79,8 +79,8 @@ export default {
 
 <style scoped>
 #loginForm {
-width: 50%;
-float: left;
+    width: 50%;
+    float: left;
 }
 
 #loginForm div {
