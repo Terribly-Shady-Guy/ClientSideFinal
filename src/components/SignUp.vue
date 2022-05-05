@@ -15,7 +15,7 @@
             <button type="submit" v-on:click.prevent="signUp">Sign Up</button>
         </form>
         <ul>
-            <li v-show="!passwordValidaton.hasMinLength">Password must be at least 6 characters</li>
+            <li v-show="!passwordValidaton.isMinLength">Password must be at least 6 characters</li>
             <li v-show="!passwordValidaton.hasUppercase">Password must contain at least 1 upper case letter</li>
             <li v-show="!passwordValidaton.hasLowercase">Password must contain at least 1 lower case letter</li>
             <li v-show="!passwordValidaton.hasDigit">Password must contain at least 1 number</li>
@@ -38,7 +38,7 @@ export default {
             status: "",
             message: "",
             passwordValidaton: {
-                hasMinLength: false,
+                isMinLength: false,
                 hasDigit: false,
                 hasUppercase: false,
                 hasLowercase: false,
@@ -91,13 +91,13 @@ export default {
             var password = this.user.password;
 
             if (password != "") {
-                validObject.hasMinLength = password.length > 6;
+                validObject.isMinLength = password.length > 6;
                 validObject.hasLowercase = /(?=.*[a-z])/.test(password);
                 validObject.hasUppercase = /(?=.*[A-Z])/.test(password);
                 validObject.hasDigit = /(?=.\d)/.test(password);
                 validObject.hasSpecialChar = /(?=.*[!@#$%^&*])/.test(password);
             } else {
-                validObject.hasMinLength = false;
+                validObject.isMinLength = false;
                 validObject.hasLowercase = false;
                 validObject.hasUppercase = false;
                 validObject.hasDigit = false;
