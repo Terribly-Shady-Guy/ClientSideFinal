@@ -49,15 +49,16 @@ export default {
     methods: {
         signUp: async function() {
             var pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{6,}$/;
+            var user = this.user;
 
-            if (pattern.test(this.user.password)) {
+            if (pattern.test(user.password)) {
                 let formData = new FormData();
 
-                formData.append("username", this.user.username);
-                formData.append("password", this.user.password);
-                formData.append("firstName", this.user.firstName);
-                formData.append("lastName", this.user.lastName);
-                formData.append("email", this.user.email);
+                formData.append("username", user.username);
+                formData.append("password", user.password);
+                formData.append("firstName", user.firstName);
+                formData.append("lastName", user.lastName);
+                formData.append("email", user.email);
 
                 const url = "http://localhost/Client-Side_Programming/tylerkaufmannfinal/src/php/signup.php";
 
@@ -71,11 +72,11 @@ export default {
                 this.status = data.status;
 
                 if (data.status == "success") {
-                    this.user.username = "";
-                    this.user.password = "";
-                    this.user.firstName = "";
-                    this.user.lastName = "";
-                    this.user.email = "";
+                    user.username = "";
+                    user.password = "";
+                    user.firstName = "";
+                    user.lastName = "";
+                    user.email = "";
 
                     this.$router.push("/");
                 } else {
@@ -86,18 +87,21 @@ export default {
     },
     watch: {
         password: function() {
-            if (this.user.password != "") {
-                this.passwordValidaton.hasMinLength = this.user.password.length > 6;
-                this.passwordValidaton.hasLowercase = /(?=.*[a-z])/.test(this.user.password);
-                this.passwordValidaton.hasUppercase = /(?=.*[A-Z])/.test(this.user.password);
-                this.passwordValidaton.hasDigit = /(?=.\d)/.test(this.user.password);
-                this.passwordValidaton.hasSpecialChar = /(?=.*[!@#$%^&*])/.test(this.user.password);
+            var validObject = this.passwordValidaton;
+            var password = this.user.password;
+
+            if (password != "") {
+                validObject.hasMinLength = password.length > 6;
+                validObject.hasLowercase = /(?=.*[a-z])/.test(password);
+                validObject.hasUppercase = /(?=.*[A-Z])/.test(password);
+                validObject.hasDigit = /(?=.\d)/.test(password);
+                validObject.hasSpecialChar = /(?=.*[!@#$%^&*])/.test(password);
             } else {
-                this.passwordValidaton.hasMinLength = false;
-                this.passwordValidaton.hasLowercase = false;
-                this.passwordValidaton.hasUppercase = false;
-                this.passwordValidaton.hasDigit = false;
-                this.passwordValidaton.hasSpecialChar = false;
+                validObject.hasMinLength = false;
+                validObject.hasLowercase = false;
+                validObject.hasUppercase = false;
+                validObject.hasDigit = false;
+                validObject.hasSpecialChar = false;
             }
         }
     }
