@@ -3,15 +3,15 @@
         <form>
             <p v-if="status != 'success'">{{ message }}</p>
             <label for="username">Username: </label>
-            <input type="text" id="username" v-model="user.username">
+            <input type="text" id="username" v-model="username">
             <label for="password">Password: </label>
-            <input type="password" id="password" v-model="user.password">
+            <input type="password" id="password" v-model="password">
             <label for="firstName">First Name: </label>
-            <input type="text" id="firstName" v-model="user.firstName">
+            <input type="text" id="firstName" v-model="firstName">
             <label for="lastName">Last Name: </label>
-            <input type="text" id="lastName" v-model="user.lastName">
+            <input type="text" id="lastName" v-model="lastName">
             <label for="email">Email: </label>
-            <input type="text" id="email" v-model="user.email">
+            <input type="text" id="email" v-model="email">
             <button type="submit" v-on:click.prevent="signUp">Sign Up</button>
         </form>
         <ul>
@@ -28,13 +28,11 @@
 export default {
     data: function() {
         return {   
-            user: {
-                username: "",
-                password: "",
-                firstName: "",
-                lastName: "",
-                email: ""
-            },
+            username: "",
+            password: "",
+            firstName: "",
+            lastName: "",
+            email: "",
             status: "",
             message: "",
             passwordValidaton: {
@@ -44,21 +42,20 @@ export default {
                 hasLowercase: false,
                 hasSpecialChar: false
             }
-        };
+        }
     },
     methods: {
         signUp: async function() {
             var pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{6,}$/;
-            var user = this.user;
 
-            if (pattern.test(user.password)) {
+            if (pattern.test(this.password)) {
                 let formData = new FormData();
 
-                formData.append("username", user.username);
-                formData.append("password", user.password);
-                formData.append("firstName", user.firstName);
-                formData.append("lastName", user.lastName);
-                formData.append("email", user.email);
+                formData.append("username", this.username);
+                formData.append("password", this.password);
+                formData.append("firstName", this.firstName);
+                formData.append("lastName", this.lastName);
+                formData.append("email", this.email);
 
                 const url = "http://localhost/Client-Side_Programming/tylerkaufmannfinal/src/php/signup.php";
 
@@ -72,11 +69,11 @@ export default {
                 this.status = data.status;
 
                 if (data.status == "success") {
-                    user.username = "";
-                    user.password = "";
-                    user.firstName = "";
-                    user.lastName = "";
-                    user.email = "";
+                    this.user.username = "";
+                    this.user.password = "";
+                    this.user.firstName = "";
+                    this.user.lastName = "";
+                    this.user.email = "";
 
                     this.$router.push("/");
                 } else {
@@ -87,21 +84,20 @@ export default {
     },
     watch: {
         password: function() {
-            var validObject = this.passwordValidaton;
-            var password = this.user.password;
+            var password = this.password;
 
             if (password != "") {
-                validObject.isMinLength = password.length > 6;
-                validObject.hasLowercase = /(?=.*[a-z])/.test(password);
-                validObject.hasUppercase = /(?=.*[A-Z])/.test(password);
-                validObject.hasDigit = /(?=.\d)/.test(password);
-                validObject.hasSpecialChar = /(?=.*[!@#$%^&*])/.test(password);
+                this.passwordValidaton.isMinLength = password.length > 6;
+                this.passwordValidaton.hasLowercase = /(?=.*[a-z])/.test(password);
+                this.passwordValidaton.hasUppercase = /(?=.*[A-Z])/.test(password);
+                this.passwordValidaton.hasDigit = /(?=.\d)/.test(password);
+                this.passwordValidaton.hasSpecialChar = /(?=.*[!@#$%^&*])/.test(password);
             } else {
-                validObject.isMinLength = false;
-                validObject.hasLowercase = false;
-                validObject.hasUppercase = false;
-                validObject.hasDigit = false;
-                validObject.hasSpecialChar = false;
+                this.passwordValidaton.isMinLength = false;
+                this.passwordValidaton.hasLowercase = false;
+                this.passwordValidaton.hasUppercase = false;
+                this.passwordValidaton.hasDigit = false;
+                this.passwordValidaton.hasSpecialChar = false;
             }
         }
     }
