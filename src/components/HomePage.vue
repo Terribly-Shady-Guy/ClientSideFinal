@@ -2,7 +2,7 @@
     <div>
         <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Labore, consequuntur aperiam. Unde laudantium rerum consequatur dicta maiores, quidem iste in magnam quia molestiae ducimus cupiditate aliquam tempore voluptate inventore consequuntur.</p>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores pariatur dolore eum voluptatum. Debitis facilis impedit, nobis delectus ex explicabo ipsa mollitia velit perspiciatis vitae perferendis, libero harum consectetur quia!</p>
-        <div class="row">
+        <div id="wrapper">
             <div v-for="(image, index) in images" :key="index" class="photoCard">
                 <img v-bind:src="require('@/assets/portfolio_images/' + image.Picture)">
                 <p>{{ image.Description }}</p>
@@ -20,7 +20,7 @@ export default {
         }
     },
     created: function() {
-        this.getSampleImages;
+        this.getSampleImages();
     },
     methods: {
         getSampleImages: async function() {
@@ -31,6 +31,8 @@ export default {
             
             if (data.status == "success") {
                 this.images = data.images;
+            } else {
+                console.log(data.message);
             }
         }
     }
@@ -38,14 +40,13 @@ export default {
 </script>
 
 <style scoped>
-.photoCard {
-    float: left;
-    margin: 30px;
-    text-align: center;
+#wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
 }
 
-.row {
-    display: flex;
-    justify-content: center;
+.photoCard img {
+    width: 70%;
+    height: 200px;
 }
 </style>

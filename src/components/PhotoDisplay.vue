@@ -1,18 +1,20 @@
 <template>
     <div>
         <h2>Welcome to your photography portfolio {{ username }}!</h2>
-        <router-link to="/insertimage">Add Image</router-link>
+        <router-link to="/insertimage" v-if="auth">Add Image</router-link>
         <h3 v-if="status == 'error'">{{ message }}</h3>
-        <div class="photoCard" v-for="image in images" :key="image.PortID">
-            <img v-bind:src="require('@/assets/portfolio_images/' + image.Picture)">
-            <p>{{ image.Description }}</p>
-            <p>{{ image.DateTaken }}</p>
-            <p>{{ image.UploadDate }}</p>
-            <form>
-                <button type="submit" v-on:click.prevent="updateImage">Update</button>
-                <button type="submit" v-on:click.prevent="deleteImage">Delete</button>
-                <input type="hidden" v-bind:value="image.PortID">
-            </form>
+        <div id="wrapper">
+            <div class="photoCard" v-for="image in images" :key="image.PortID">
+                <img v-bind:src="require('@/assets/portfolio_images/' + image.Picture)">
+                <p>{{ image.Description }}</p>
+                <p>{{ image.DateTaken }}</p>
+                <p>{{ image.UploadDate }}</p>
+                <form>
+                    <button type="submit" v-on:click.prevent="updateImage">Update</button>
+                    <button type="submit" v-on:click.prevent="deleteImage">Delete</button>
+                    <input type="hidden" v-bind:value="image.PortID">
+                </form>
+            </div>
         </div>
     </div>
 </template>
@@ -27,6 +29,9 @@ export default {
         },
         session: function() {
             return store.state.session;
+        },
+        auth: function() {
+            return store.state.auth;
         }
     },
     data: function() {
@@ -101,13 +106,23 @@ export default {
 </script>
 
 <style scoped>
-.photoCard {
-    width: 30%;
+#wrapper {
     display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(auto-fill, 350px);
 }
 
 .photoCard img {
     width: 70%;
     height: 200px;
+}
+
+.photoCard form {
+    display: flex;
+    justify-content: center;
+}
+
+.photoCard form button {
+    margin: 5px;
 }
 </style>
