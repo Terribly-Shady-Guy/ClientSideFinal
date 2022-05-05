@@ -1,9 +1,11 @@
 <template>
     <div>
-        <h2>Welcome to your photography portfolio {{ username }}!</h2>
-        <router-link to="/insertimage" v-if="auth">Add Image</router-link>
-        <h3 v-if="status == 'error'">{{ message }}</h3>
         <div id="wrapper">
+            <router-link to="/insertimage" v-if="auth">Add Image</router-link>
+            <h2>Welcome to your photography portfolio {{ username }}!</h2>
+            <h3 v-if="status == 'error'">{{ message }}</h3>
+        </div>
+        <div id="gridWrapper">
             <div class="photoCard" v-for="image in images" :key="image.PortID">
                 <img v-bind:src="require('@/assets/portfolio_images/' + image.Picture)">
                 <p>{{ image.Description }}</p>
@@ -106,7 +108,15 @@ export default {
 </script>
 
 <style scoped>
-#wrapper {
+h2 {
+    width: 80%;
+}
+
+a {
+    margin: 20px;
+}
+
+#gridWrapper {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(auto-fill, 350px);
