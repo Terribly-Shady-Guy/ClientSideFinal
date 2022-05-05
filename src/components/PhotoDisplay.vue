@@ -3,8 +3,8 @@
         <div id="wrapper">
             <router-link to="/insertimage" v-if="auth">Add Image</router-link>
             <h2>Welcome to your photography portfolio {{ username }}!</h2>
-            <h3 v-if="status == 'error'">{{ message }}</h3>
         </div>
+        <h3 v-if="status == 'error'">{{ message }}</h3>
         <div id="gridWrapper">
             <div class="photoCard" v-for="image in images" :key="image.PortID">
                 <img v-bind:src="require('@/assets/portfolio_images/' + image.Picture)">
@@ -113,7 +113,22 @@ h2 {
 }
 
 a {
-    margin: 20px;
+    margin-top: 20px;
+    width: 20%;
+}
+
+a, h2 {
+    float: left;
+}
+
+a, h2, p, h3 {
+    text-align: center;
+}
+
+div::after {
+    clear: both;
+    display: block;
+    content: "";
 }
 
 #gridWrapper {
@@ -125,6 +140,8 @@ a {
 .photoCard img {
     width: 70%;
     height: 200px;
+    display: block;
+    margin: 0 auto;
 }
 
 .photoCard form {

@@ -2,17 +2,31 @@
     <div>
         <form>
             <p v-if="status != 'success'">{{ message }}</p>
-            <label for="username">Username: </label>
-            <input type="text" id="username" v-model="username">
-            <label for="password">Password: </label>
-            <input type="password" id="password" v-model="password">
-            <label for="firstName">First Name: </label>
-            <input type="text" id="firstName" v-model="firstName">
-            <label for="lastName">Last Name: </label>
-            <input type="text" id="lastName" v-model="lastName">
-            <label for="email">Email: </label>
-            <input type="text" id="email" v-model="email">
-            <button type="submit" v-on:click.prevent="signUp">Sign Up</button>
+            <table>
+                <tr>
+                    <td><label for="username">Username:</label></td>
+                    <td><input type="text" id="username" v-model="username"></td>
+                </tr>
+                <tr>
+                    <td><label for="password">Password:</label></td>
+                    <td><input type="password" id="password" v-model="password"></td>
+                </tr>
+                <tr>
+                    <td><label for="firstName">First Name:</label></td>
+                    <td><input type="text" id="firstName" v-model="firstName"></td>
+                </tr>
+                <tr>
+                    <td><label for="lastName">Last Name:</label></td>
+                    <td><input type="text" id="lastName" v-model="lastName"></td>
+                </tr>
+                <tr>
+                    <td><label for="email">Email:</label></td>
+                    <td><input type="text" id="email" v-model="email"></td>
+                </tr>
+                <tr>
+                    <td><button type="submit" v-on:click.prevent="signUp">Sign Up</button></td>
+                </tr>
+            </table>
         </form>
         <ul>
             <li v-show="!passwordValidaton.isMinLength">Password must be at least 6 characters</li>
@@ -69,11 +83,11 @@ export default {
                 this.status = data.status;
 
                 if (data.status == "success") {
-                    this.user.username = "";
-                    this.user.password = "";
-                    this.user.firstName = "";
-                    this.user.lastName = "";
-                    this.user.email = "";
+                    this.username = "";
+                    this.password = "";
+                    this.firstName = "";
+                    this.lastName = "";
+                    this.email = "";
 
                     this.$router.push("/");
                 } else {
@@ -87,7 +101,7 @@ export default {
             var password = this.password;
 
             if (password != "") {
-                this.passwordValidaton.isMinLength = password.length > 6;
+                this.passwordValidaton.isMinLength = password.length >= 6;
                 this.passwordValidaton.hasLowercase = /(?=.*[a-z])/.test(password);
                 this.passwordValidaton.hasUppercase = /(?=.*[A-Z])/.test(password);
                 this.passwordValidaton.hasDigit = /(?=.\d)/.test(password);
@@ -105,5 +119,15 @@ export default {
 </script>
 
 <style scoped>
+table {
+    margin: 0 auto;
+}
 
+label {
+    text-align: left;
+}
+
+ul {
+    text-align: center;
+}
 </style>
