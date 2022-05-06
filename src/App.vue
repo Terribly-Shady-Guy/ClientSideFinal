@@ -74,7 +74,7 @@ nav a {
   font-weight: bold;
   color: #2D728F;
   width: 20%;
-  padding: 30px;
+  padding: 33px;
   display: block;
   float: left;
   text-align: center;

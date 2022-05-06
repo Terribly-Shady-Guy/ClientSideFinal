@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h2>Thank you for joining us</h2>
         <form>
             <p v-if="status != 'success'">{{ message }}</p>
             <table>
@@ -121,6 +122,8 @@ export default {
 <style scoped>
 table {
     margin: 0 auto;
+    background-color: #2D728F;
+    color: #c2b6ed;
 }
 
 label {
@@ -130,5 +133,9 @@ label {
 ul {
     text-align: center;
     color: red;
+}
+
+h2 {
+    text-align: center;
 }
 </style>

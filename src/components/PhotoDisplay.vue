@@ -114,6 +114,7 @@ h2 {
 
 a {
     width: 10%;
+    margin-top: 25px;
 }
 
 a, h2 {
