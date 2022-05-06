@@ -49,4 +49,8 @@ export default {
     width: 70%;
     height: 200px;
 }
+
+.photoCard {
+    text-align: center;
+}
 </style>

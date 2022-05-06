@@ -109,12 +109,11 @@ export default {
 
 <style scoped>
 h2 {
-    width: 80%;
+    width: 90%;
 }
 
 a {
-    margin-top: 20px;
-    width: 20%;
+    width: 10%;
 }
 
 a, h2 {

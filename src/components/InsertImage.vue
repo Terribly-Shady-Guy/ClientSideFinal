@@ -1,13 +1,24 @@
 <template>
     <form>
+        <h2>Add Image</h2>
         <p v-if="status == 'error'">{{ message }}</p>
-        <label for="image">Image: </label>
-        <input type="file" id="image" v-on:change="changeImage">
-        <label for="description">Description: </label>
-        <textarea id="description" v-model="description"></textarea>
-        <label for="dateTaken">Date Taken: </label>
-        <input type="date" id="dateTaken" v-model="dateTaken">
-        <button type="submit" v-on:click.prevent="addImage">Add</button>
+        <table>
+            <tr>
+                <td><label for="image">Image: </label></td>
+                <td><input type="file" id="image" v-on:change="changeImage"></td>
+            </tr>
+            <tr>
+                <td><label for="dateTaken">Date Taken: </label></td>
+                <td><input type="date" id="dateTaken" v-model="dateTaken"></td>
+            </tr>
+            <tr>
+                <td><label for="description">Description: </label></td>
+                <td><textarea id="description" v-model="description"></textarea></td>
+            </tr>
+            <tr>
+                <td><button type="submit" v-on:click.prevent="addImage">Add</button></td>
+            </tr>
+        </table>
     </form>
 </template>
 
@@ -61,3 +72,13 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+table {
+    margin: 0 auto;
+}
+
+h2 {
+    text-align: center;
+}
+</style>

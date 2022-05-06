@@ -9,7 +9,7 @@
                 <router-link to="/signup">Sign Up</router-link>
             </div>
         </div>
-        <div v-else>
+        <div v-else id="loggedInDiv">
             <p>Welcome {{ loggedInUsername }}!</p>
             <button type="submit" id="logout" v-on:click.prevent="logout">Log out</button>
         </div>
@@ -94,6 +94,15 @@ export default {
 
 #loginForm a {
     margin-right: 45px;
+}
+
+#loggedInDiv button, #loggedInDiv p {
+    float: left;
+}
+
+#loggedInDiv button {
+    margin-top: 16px;
+    margin-left: 5px;
 }
 
 #loginForm div::after {
