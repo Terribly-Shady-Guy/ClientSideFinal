@@ -74,11 +74,14 @@ export default {
 </script>
 
 <style scoped>
-table {
-    margin: 0 auto;
-}
-
 h2 {
     text-align: center;
+}
+
+table {
+    margin: 0 auto;
+    background-color: #2D728F;
+    color: #71efeb;
+    padding: 10px;
 }
 </style>

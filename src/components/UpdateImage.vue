@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h2>Update Image</h2>
         <form>
             <table>
                 <tr>
@@ -107,13 +108,19 @@ table, img {
     margin: 0 auto;
 }
 
+table {
+    background-color: #2D728F;
+    color: #71efeb;
+    padding: 10px;
+}
+
 img {
     width: 263px;
     height: 200px;
     display: block;
 }
 
-h3 {
+h3, h2 {
     text-align: center;
 }
 </style>

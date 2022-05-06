@@ -72,16 +72,20 @@ nav {
 
 nav a {
   font-weight: bold;
-  color: #2D728F;
   width: 20%;
-  padding: 33px;
+  padding: 35px;
   display: block;
   float: left;
   text-align: center;
+  text-decoration: none;
 }
 
 nav a:hover {
   background-color: rgb(71, 49, 152, 0.2);
+}
+
+a {
+  color: #2D728F;
 }
 
 #headerRow {
@@ -90,6 +94,13 @@ nav a:hover {
 
 nav a.router-link-exact-active {
   background-color: #c2b6ed;
+}
+
+button {
+  border-radius: 5px;
+  padding: 4px;
+  background-color: #9BF3F0;
+  border-color: #71efeb;
 }
 
 header::after, #headerRow::after {

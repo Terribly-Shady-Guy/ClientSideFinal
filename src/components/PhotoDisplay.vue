@@ -117,6 +117,10 @@ a {
     margin-top: 25px;
 }
 
+a:hover {
+    color: #c2b6ed;
+}
+
 a, h2 {
     float: left;
 }

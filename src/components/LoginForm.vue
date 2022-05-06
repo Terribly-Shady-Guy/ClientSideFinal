@@ -98,13 +98,19 @@ export default {
     margin-right: 45px;
 }
 
-#loggedInDiv button, #loggedInDiv p {
-    float: left;
+#loginForm p {
+    margin: 5px;
+    text-align: right;
+}
+
+#loginForm a:hover {
+    color: #c2b6ed;
 }
 
 #loggedInDiv button {
     margin-top: 16px;
     margin-left: 5px;
+    float: right;
 }
 
 #loginForm div::after {

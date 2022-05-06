@@ -123,7 +123,8 @@ export default {
 table {
     margin: 0 auto;
     background-color: #2D728F;
-    color: #c2b6ed;
+    color: #71efeb;
+    padding: 10px;
 }
 
 label {
