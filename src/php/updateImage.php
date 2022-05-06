@@ -20,42 +20,50 @@ if ($_SESSION['auth']
     }
     else
     {
-        if (is_uploaded_file($_FILES['picture']['tmp_name']))
+        if (validateUser($_SESSION['userID'], $_POST['portID'], $connection))
         {
-            switch ($_FILES['picture']['type'])
+            if (is_uploaded_file($_FILES['picture']['tmp_name']))
             {
-                case "image/jpeg":
-                    $ext = "jpg";
-                    break;
-                case "image/png":
-                    $ext = "png";
-                    break;
-                case "image/tiff":
-                    $ext = "tiff";
-                    break;
-                default:
-                    $ext = "";
-                    break;
-            }
+                switch ($_FILES['picture']['type'])
+                {
+                    case "image/jpeg":
+                        $ext = "jpg";
+                        break;
+                    case "image/png":
+                        $ext = "png";
+                        break;
+                    case "image/tiff":
+                        $ext = "tiff";
+                        break;
+                    default:
+                        $ext = "";
+                        break;
+                }
 
-            if ($ext)
-            {
-                $picture = sanitizeInput($_FILES['picture']['name'], $connection);
-                $folder = "../assets/portfolio_images/" . $picture;
-                move_uploaded_file($_FILES['picture']['tmp_name'], $folder);
+                if ($ext)
+                {
+                    $picture = sanitizeInput($_FILES['picture']['name'], $connection);
+                    $folder = "../assets/portfolio_images/" . $picture;
+                    move_uploaded_file($_FILES['picture']['tmp_name'], $folder);
 
-                $response = update($picture, $connection);
+                    $response = update($picture, $connection);
+                }
+                else
+                {
+                    $response['status'] = "error";
+                    $response['message'] = "File must be a png, jpg, or tiff.";
+                }
             }
             else
             {
-                $response['status'] = "error";
-                $response['message'] = "File must be a png, jpg, or tiff.";
+                $picture = sanitizeInput($_POST['picture'], $connection);
+                $response = update($picture, $connection);
             }
         }
         else
         {
-            $picture = sanitizeInput($_POST['picture'], $connection);
-            $response = update($picture, $connection);
+            $response['status'] = "error";
+            $response['message'] = "You do not have access to this image";
         }
     }
 

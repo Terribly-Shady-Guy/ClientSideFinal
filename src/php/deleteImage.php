@@ -1,14 +1,13 @@
 <?php
 
 require_once "config.php";
+require_once "utils.php";
 
 session_id($_POST['session']);
 session_start();
 
 if ($_SESSION['auth'] && isset($_POST['portID']))
 {
-    $portID = $_POST['portID'];
-
     $connection = new mysqli($hn, $un, $pw, $db);
 
     if ($connection->connect_error)
@@ -18,21 +17,31 @@ if ($_SESSION['auth'] && isset($_POST['portID']))
     }
     else
     {
-        $stmt = $connection->prepare('DELETE FROM portfolio WHERE PortID=?');
-        $stmt->bind_param("i", $portID);
-
-        if ($stmt->execute())
+        $portID = $_POST['portID'];
+        
+        if (validateUser($_SESSION['userID'], $portID, $connection))
         {
-            $response['status'] = "success";
-            $response['message'] = "Image was deleted";
+            $stmt = $connection->prepare('DELETE FROM portfolio WHERE PortID=?');
+            $stmt->bind_param("i", $portID);
+
+            if ($stmt->execute())
+            {
+                $response['status'] = "success";
+                $response['message'] = "Image was deleted";
+            }
+            else
+            {
+                $response['status'] = "error";
+                $response['message'] = "Could not elete this image";
+            }
+
+            $stmt->close();
         }
         else
         {
             $response['status'] = "error";
-            $response['message'] = "Could not elete this image";
+            $response['message'] = "You do not have access to delete this image.";
         }
-
-        $stmt->close();
     }
 
     $connection->close();
