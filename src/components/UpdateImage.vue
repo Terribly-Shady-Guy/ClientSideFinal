@@ -9,11 +9,11 @@
                 </tr>
                 <tr>
                     <td><label for="dateTaken">Date Taken: </label></td>
-                    <td><input type="date" id="dateTaken" v-model="dateTaken"></td>
+                    <td><input type="date" id="dateTaken" v-model="dateTaken" v-bind:class="dateTakenValid? 'valid' : 'invalid'"></td>
                 </tr>
                 <tr>
                     <td><label for="description">description: </label></td>
-                    <td><textarea id="description" v-model="description"></textarea></td>
+                    <td><textarea id="description" v-model="description" v-bind:class="descriptionValid? 'valid' : 'invalid'"></textarea></td>
                 </tr>
                 <tr>
                     <td><button type="submit" v-on:click.prevent="updateImage">Update</button></td>
@@ -34,7 +34,9 @@ export default {
             description: "",
             dateTaken: "",
             status: "",
-            message: ""
+            message: "",
+            descriptionValid: false,
+            dateTakenValid: false
         };
     },
     computed: {
@@ -98,6 +100,22 @@ export default {
         },
         setPicture: function(event) {
             this.picture = event.target.files[0];
+        }
+    },
+    watch: {
+        description: function() {
+            if (this.description != "") {
+                this.descriptionValid = true;
+            } else {
+                this.descriptionValid = false;
+            }
+        },
+        dateTaken: function() {
+            if (this.dateTaken != "") {
+                this.dateTakenValid = true;
+            } else {
+                this.dateTakenValid = false;
+            }
         }
     }
 }

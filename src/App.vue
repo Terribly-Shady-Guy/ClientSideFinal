@@ -103,6 +103,22 @@ button {
   border-color: #71efeb;
 }
 
+.pictureValid {
+  color: lightgreen;
+}
+
+.pictureInvalid {
+  color: coral;
+}
+
+.valid {
+  background-color: lightgreen;
+}
+
+.invalid {
+  background-color: coral;
+}
+
 header::after, #headerRow::after {
   display: block;
   clear: both;

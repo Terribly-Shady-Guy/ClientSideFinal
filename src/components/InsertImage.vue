@@ -5,15 +5,15 @@
         <table>
             <tr>
                 <td><label for="image">Image: </label></td>
-                <td><input type="file" id="image" v-on:change="changeImage"></td>
+                <td><input type="file" id="image" v-on:change="changeImage" v-bind:class="fileValid? 'pictureValid' : 'pictureInvalid'"></td>
             </tr>
             <tr>
                 <td><label for="dateTaken">Date Taken: </label></td>
-                <td><input type="date" id="dateTaken" v-model="dateTaken"></td>
+                <td><input type="date" id="dateTaken" v-model="dateTaken" v-bind:class="dateTakenValid? 'valid' : 'invalid'"></td>
             </tr>
             <tr>
                 <td><label for="description">Description: </label></td>
-                <td><textarea id="description" v-model="description"></textarea></td>
+                <td><textarea id="description" v-model="description" v-bind:class="descriptionValid? 'valid' : 'invalid'"></textarea></td>
             </tr>
             <tr>
                 <td><button type="submit" v-on:click.prevent="addImage">Add</button></td>
@@ -32,7 +32,10 @@ export default {
             description: "",
             dateTaken: "",
             status: "",
-            message: ""
+            message: "",
+            fileValid: false,
+            descriptionValid: false,
+            dateTakenValid: false
         }
     },
     computed: {
@@ -68,6 +71,29 @@ export default {
         },
         changeImage: function(event) {
             this.picture = event.target.files[0];
+        }
+    },
+    watch: {
+        picture: function() {
+            if (this.picture != null) {
+                this.fileValid = true;
+            } else {
+                this.fileValid = false;
+            }
+        },
+        dateTaken: function() {
+            if (this.dateTaken != "") {
+                this.dateTakenValid = true;
+            } else {
+                this.dateTakenValid = false;
+            }
+        },
+        description: function() {
+            if (this.description != "") {
+                this.descriptionValid = true;
+            } else {
+                this.descriptionValid = false;
+            }
         }
     }
 }
