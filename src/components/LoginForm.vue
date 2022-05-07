@@ -108,7 +108,7 @@ export default {
     color: #c2b6ed;
 }
 
-#loggedInDiv button {
+#loggedInDiv button, #loggedInDiv a {
     margin-top: 16px;
     margin-left: 5px;
     float: right;
