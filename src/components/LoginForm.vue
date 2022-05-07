@@ -12,6 +12,7 @@
         <div v-else id="loggedInDiv">
             <p>Welcome {{ loggedInUsername }}!</p>
             <button type="submit" id="logout" v-on:click.prevent="logout">Log out</button>
+            <router-link to="/edituser">Edit Account</router-link>
         </div>
     </form>
 </template>

@@ -15,6 +15,11 @@ const routes = [
     component: () => import('../views/SignUpView.vue')
   },
   {
+    path: '/edituser',
+    name: 'edituser',
+    component: () => import('../views/EditUserView.vue')
+  },
+  {
     path: '/photodisplay',
     name: 'photodisplay',
     component: () => import('../views/PhotoDisplayView.vue')
