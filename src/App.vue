@@ -81,7 +81,7 @@ nav a {
 }
 
 nav a:hover {
-  background-color: rgb(71, 49, 152, 0.2);
+  background-color: rgb(71, 49, 152, 0.1);
 }
 
 a {
