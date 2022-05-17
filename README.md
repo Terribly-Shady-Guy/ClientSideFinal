@@ -1,4 +1,4 @@
-# tylerkaufmannfinal
+# ClientSideFinal
 
 ## Project setup
 ```
