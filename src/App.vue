@@ -80,7 +80,7 @@ nav a {
   text-decoration: none;
 }
 
-nav a:hover {
+nav a:hover, button:hover {
   background-color: rgb(71, 49, 152, 0.1);
 }
 

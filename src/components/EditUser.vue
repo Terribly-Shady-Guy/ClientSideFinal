@@ -208,6 +208,7 @@ label {
 ul {
     text-align: center;
     color: red;
+    list-style-type: none;
 }
 
 h2 {
